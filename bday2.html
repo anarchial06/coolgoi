@@ -1,0 +1,1270 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>HEY YOU 😭</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+
+        font-family: "Comic Sans MS", cursive;
+        overflow-x: hidden;
+
+        background-image:
+            linear-gradient(
+                rgba(255, 0, 255, 0.25),
+                rgba(0, 255, 255, 0.25)
+            ),
+            url("photos/embarrassing-bg.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+
+        color: #000;
+    }
+
+    /* ================= ACCESS GATE ================= */
+
+    #accessGate {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+
+        min-height: 100svh;
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 15px;
+
+        background:
+            repeating-linear-gradient(
+                45deg,
+                #ff00ff 0px,
+                #ff00ff 12px,
+                #00ffff 12px,
+                #00ffff 24px
+            );
+
+        overflow-y: auto;
+
+        transition: opacity 0.7s ease;
+    }
+
+    .access-box {
+        width: 100%;
+        max-width: 500px;
+
+        padding: 22px 16px;
+
+        background: #ffff00;
+
+        border: 7px dashed #000;
+        box-shadow: 9px 9px 0 #000;
+
+        text-align: center;
+
+        transform: rotate(-1deg);
+    }
+
+    .warning {
+        background: red;
+        color: white;
+
+        border: 4px solid black;
+
+        padding: 10px;
+
+        font-size: clamp(18px, 5vw, 27px);
+        font-weight: bold;
+    }
+
+    .access-box h1 {
+        margin: 15px 0 5px;
+
+        font-size: clamp(42px, 13vw, 70px);
+
+        color: blue;
+
+        text-shadow:
+            4px 4px #ff00ff;
+    }
+
+    .access-text {
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 1.4;
+    }
+
+    .question-box {
+        margin-top: 20px;
+
+        padding: 18px 12px;
+
+        background: white;
+
+        border: 5px solid black;
+    }
+
+    .question-box h2 {
+        margin-top: 0;
+
+        font-size: clamp(20px, 6vw, 28px);
+    }
+
+    #birthdayChoices {
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .birthday-option {
+        width: 100%;
+        min-height: 52px;
+
+        padding: 12px;
+
+        border: 4px solid black;
+
+        background: #00ff00;
+
+        font-family: "Comic Sans MS", cursive;
+        font-size: 17px;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        touch-action: manipulation;
+
+        transition: transform 0.1s;
+    }
+
+    .birthday-option:hover {
+        background: orange;
+        transform: rotate(1deg);
+    }
+
+    .birthday-option:active {
+        transform: scale(0.95);
+    }
+
+    #accessMessage {
+        min-height: 28px;
+
+        margin: 15px 0 0;
+
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .wrong {
+        color: red;
+    }
+
+    .correct {
+        color: green;
+
+        font-size: 23px !important;
+    }
+
+
+    /* ================= MAIN WEBSITE ================= */
+
+    #mainWebsite {
+        display: none;
+
+        min-height: 100svh;
+
+        padding-bottom:
+            calc(30px + env(safe-area-inset-bottom));
+    }
+
+    .page {
+        width: 100%;
+        max-width: 650px;
+
+        margin: auto;
+
+        padding: 12px;
+    }
+
+    .box {
+        margin: 18px 0;
+
+        padding: 18px;
+
+        background: rgba(255, 255, 255, 0.90);
+
+        border: 5px solid black;
+
+        box-shadow:
+            8px 8px 0 black;
+
+        transform: rotate(-0.5deg);
+    }
+
+    /* HEADER */
+
+    .header {
+        background: #ff00ff;
+
+        text-align: center;
+
+        padding: 22px 10px;
+
+        border: 6px solid black;
+
+        box-shadow: 8px 8px 0 black;
+
+        transform: rotate(1deg);
+    }
+
+    .header h1 {
+        margin: 0;
+
+        font-size: clamp(42px, 12vw, 70px);
+
+        color: yellow;
+
+        text-shadow:
+            5px 5px blue;
+    }
+
+    .header p {
+        margin: 8px 0 0;
+
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    /* MARQUEE */
+
+    .marquee {
+        margin: 20px 0;
+
+        padding: 10px;
+
+        background: lime;
+
+        border: 4px solid black;
+
+        font-size: 18px;
+        font-weight: bold;
+
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .marquee span {
+        display: inline-block;
+
+        animation: moveText 9s linear infinite;
+    }
+
+    @keyframes moveText {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* TEXT */
+
+    h2 {
+        font-size: clamp(25px, 7vw, 38px);
+
+        margin-top: 5px;
+
+        color: #ff00ff;
+
+        text-shadow: 2px 2px yellow;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    /* MAIN PHOTO */
+
+    .main-photo {
+        width: 100%;
+
+        max-height: 500px;
+
+        object-fit: cover;
+
+        display: block;
+
+        border: 6px solid black;
+
+        box-shadow: 7px 7px 0 red;
+
+        transform: rotate(1deg);
+    }
+
+    .photo-caption {
+        text-align: center;
+
+        background: yellow;
+
+        border: 4px solid black;
+
+        padding: 10px;
+
+        margin-top: 15px;
+
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    /* BUTTONS */
+
+    .button-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+
+        margin-top: 15px;
+    }
+
+    .bad-button {
+        min-height: 58px;
+
+        border: 4px solid black;
+
+        font-family: "Comic Sans MS", cursive;
+
+        font-size: 17px;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        touch-action: manipulation;
+
+        box-shadow: 4px 4px 0 black;
+
+        transition: 0.1s;
+    }
+
+    .bad-button:active {
+        transform: translate(4px, 4px);
+
+        box-shadow: none;
+    }
+
+    .pink {
+        background: pink;
+    }
+
+    .cyan {
+        background: cyan;
+    }
+
+    .orange {
+        background: orange;
+    }
+
+    .lime {
+        background: lime;
+    }
+
+    /* RANDOM MESSAGE */
+
+    #randomMessage {
+        min-height: 30px;
+
+        margin-top: 15px;
+
+        padding: 10px;
+
+        background: yellow;
+
+        border: 3px solid black;
+
+        text-align: center;
+
+        font-weight: bold;
+    }
+
+    /* GALLERY */
+
+    .gallery {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .gallery img {
+        width: 100%;
+
+        aspect-ratio: 1 / 1;
+
+        object-fit: cover;
+
+        border: 5px solid black;
+
+        cursor: pointer;
+
+        background: white;
+
+        transition: 0.15s;
+    }
+
+    .gallery img:nth-child(odd) {
+        transform: rotate(-2deg);
+    }
+
+    .gallery img:nth-child(even) {
+        transform: rotate(2deg);
+    }
+
+    .gallery img:active {
+        transform: scale(0.96);
+    }
+
+    /* FACTS */
+
+    .facts {
+        padding: 0;
+
+        list-style: none;
+    }
+
+    .facts li {
+        margin: 10px 0;
+
+        padding: 12px;
+
+        background: #00ffff;
+
+        border: 3px solid black;
+
+        font-weight: bold;
+    }
+
+    /* AWARD */
+
+    .award {
+        text-align: center;
+
+        background: gold;
+
+        border: 7px double black;
+
+        padding: 20px;
+
+        transform: rotate(-2deg);
+    }
+
+    .award h2 {
+        color: red;
+    }
+
+    .trophy {
+        font-size: 65px;
+    }
+
+    /* FINAL MESSAGE */
+
+    .final {
+        background: #ff69b4;
+
+        text-align: center;
+
+        border: 6px solid black;
+    }
+
+    .final h2 {
+        color: blue;
+    }
+
+    .bye {
+        font-size: 42px;
+
+        margin: 10px 0;
+    }
+
+    /* FOOTER */
+
+    footer {
+        text-align: center;
+
+        margin-top: 25px;
+
+        padding: 18px;
+
+        background: black;
+
+        color: lime;
+
+        border: 4px solid lime;
+
+        font-size: 15px;
+    }
+
+    /* PHOTO MODAL */
+
+    #photoModal {
+        display: none;
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 9999;
+
+        background: rgba(0,0,0,0.9);
+
+        justify-content: center;
+        align-items: center;
+
+        padding: 15px;
+    }
+
+    #photoModal img {
+        max-width: 100%;
+        max-height: 90svh;
+
+        object-fit: contain;
+
+        border: 5px solid white;
+    }
+
+    #closeModal {
+        position: absolute;
+
+        top: 15px;
+        right: 15px;
+
+        width: 50px;
+        height: 50px;
+
+        border: 4px solid white;
+
+        background: red;
+
+        color: white;
+
+        font-size: 25px;
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    /* DESKTOP */
+
+    @media (min-width: 700px) {
+
+        .page {
+            padding: 20px;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+    }
+
+    /* SMALL PHONES */
+
+    @media (max-width: 380px) {
+
+        .button-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .box {
+            padding: 14px;
+        }
+
+    }
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BIRTHDAY ACCESS GATE
+     ===================================================== -->
+
+<div id="accessGate">
+
+    <div class="access-box">
+
+        <div class="warning">
+            🔐 TOP SECRET ACCESS 🔐
+        </div>
+
+        <h1>WAIT.</h1>
+
+        <p class="access-text">
+            Before you are allowed to enter this extremely
+            important and definitely professionally made website...
+        </p>
+
+        <div class="question-box">
+
+            <h2>
+                🎂 When is your birthday?
+            </h2>
+
+            <p>
+                Choose carefully. Your entire access to this
+                completely unnecessary website depends on it. 💀
+            </p>
+
+            <div id="birthdayChoices"></div>
+
+        </div>
+
+        <p id="accessMessage"></p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN WEBSITE
+     ===================================================== -->
+
+<div id="mainWebsite">
+
+    <div class="page">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>HEY YOU 👋</h1>
+
+            <p>
+                yes you. keep scrolling.
+            </p>
+
+        </div>
+
+
+        <!-- MARQUEE -->
+
+        <div class="marquee">
+            <span>
+                🚨 YOU HAVE OFFICIALLY BEEN FORCED TO LOOK AT THIS WEBSITE 🚨
+            </span>
+        </div>
+
+
+        <!-- INTRO -->
+
+        <div class="box">
+
+            <h2>
+                okay so...
+            </h2>
+
+            <p>
+                I made you a website.
+            </p>
+
+            <p>
+                I don't really know why I made an entire website
+                instead of just sending you a message...
+            </p>
+
+            <p>
+                but we're already here now so there's no going back 😭
+            </p>
+
+        </div>
+
+
+        <!-- MAIN PHOTO -->
+
+        <div class="box">
+
+            <img
+                src="photos/main.jpg"
+                class="main-photo"
+                alt="You"
+                onclick="openPhoto(this.src)"
+            >
+
+            <div class="photo-caption">
+                LOOK AT YOU 😭
+                <br>
+                why are you actually like this
+            </div>
+
+        </div>
+
+
+        <!-- STUPID BUTTONS -->
+
+        <div class="box">
+
+            <h2>
+                buttons that do absolutely nothing important
+            </h2>
+
+            <div class="button-grid">
+
+                <button
+                    class="bad-button pink"
+                    onclick="randomMessage()"
+                >
+                    CLICK ME
+                </button>
+
+                <button
+                    class="bad-button cyan"
+                    onclick="dontClick()"
+                >
+                    DON'T CLICK
+                </button>
+
+                <button
+                    class="bad-button orange"
+                    onclick="money()"
+                >
+                    FREE MONEY 💰
+                </button>
+
+                <button
+                    class="bad-button lime"
+                    onclick="makeWorse()"
+                >
+                    MAKE IT WORSE
+                </button>
+
+            </div>
+
+            <div id="randomMessage">
+                click something. i dare you.
+            </div>
+
+        </div>
+
+
+        <!-- PHOTOS -->
+
+        <div class="box">
+
+            <h2>
+                📸 PROOF YOU EXIST 📸
+            </h2>
+
+            <p>
+                Here are some completely normal photographs
+                that definitely weren't carefully selected.
+            </p>
+
+            <div class="gallery">
+
+                <img
+                    src="photos/photo1.jpg"
+                    alt="Photo 1"
+                    onclick="openPhoto(this.src)"
+                >
+
+                <img
+                    src="photos/photo2.jpg"
+                    alt="Photo 2"
+                    onclick="openPhoto(this.src)"
+                >
+
+                <img
+                    src="photos/photo3.jpg"
+                    alt="Photo 3"
+                    onclick="openPhoto(this.src)"
+                >
+
+                <img
+                    src="photos/photo4.jpg"
+                    alt="Photo 4"
+                    onclick="openPhoto(this.src)"
+                >
+
+                <img
+                    src="photos/photo5.jpg"
+                    alt="Photo 5"
+                    onclick="openPhoto(this.src)"
+                >
+
+                <img
+                    src="photos/photo6.jpg"
+                    alt="Photo 6"
+                    onclick="openPhoto(this.src)"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- FACTS -->
+
+        <div class="box">
+
+            <h2>
+                🤓 THINGS I KNOW ABOUT YOU
+            </h2>
+
+            <ul class="facts">
+
+                <li>
+                    You are somehow both normal and completely chaotic.
+                </li>
+
+                <li>
+                    You have absolutely no idea how this website
+                    got this much effort.
+                </li>
+
+                <li>
+                    You are currently reading this instead of
+                    doing literally anything else.
+                </li>
+
+                <li>
+                    You made it this far. Unfortunately.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- AWARD -->
+
+        <div class="box award">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <h2>
+                CONGRATULATIONS
+            </h2>
+
+            <p>
+                You have won:
+            </p>
+
+            <p>
+                <strong>
+                    "PERSON I SPENT WAY TOO MUCH TIME
+                    MAKING A WEBSITE FOR"
+                </strong>
+            </p>
+
+            <p>
+                There is absolutely no prize.
+            </p>
+
+        </div>
+
+
+        <!-- FINAL -->
+
+        <div class="box final">
+
+            <div class="bye">
+                okay bye 👋
+            </div>
+
+            <h2>
+                that's basically it.
+            </h2>
+
+            <p>
+                You passed the extremely difficult
+                birthday security system.
+            </p>
+
+            <p>
+                You survived the terrible design.
+            </p>
+
+            <p>
+                And now you have reached the end.
+            </p>
+
+            <p>
+                👍
+            </p>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            THIS WEBSITE WAS MADE SPECIFICALLY FOR YOU 💀
+
+            <br><br>
+
+            100% unnecessary.
+            <br>
+            100% intentional.
+
+        </footer>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PHOTO MODAL
+     ===================================================== -->
+
+<div id="photoModal">
+
+    <button id="closeModal" onclick="closePhoto()">
+        ×
+    </button>
+
+    <img
+        id="modalImage"
+        src=""
+        alt="Full photo"
+    >
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       BIRTHDAY ACCESS
+       ===================================================== */
+
+    const correctBirthday = "18/09/2008";
+
+    const birthdayOptions = [
+        "17/09/2008",
+        "18/09/2008",
+        "19/09/2008",
+        "20/09/2008"
+    ];
+
+    const choicesContainer =
+        document.getElementById("birthdayChoices");
+
+    const accessMessage =
+        document.getElementById("accessMessage");
+
+
+    /*
+       Shuffle the four answers so the correct answer
+       isn't always in the same position.
+    */
+
+    birthdayOptions.sort(() => Math.random() - 0.5);
+
+
+    birthdayOptions.forEach(function(date) {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "birthday-option";
+
+        button.textContent =
+            date;
+
+        button.onclick = function() {
+
+            if (date === correctBirthday) {
+
+                accessMessage.className =
+                    "correct";
+
+                accessMessage.textContent =
+                    "✅ ACCESS GRANTED 😭";
+
+
+                document
+                    .querySelectorAll(".birthday-option")
+                    .forEach(function(btn) {
+                        btn.disabled = true;
+                    });
+
+
+                setTimeout(function() {
+
+                    const gate =
+                        document.getElementById("accessGate");
+
+                    gate.style.opacity = "0";
+
+
+                    setTimeout(function() {
+
+                        gate.remove();
+
+                        document.getElementById(
+                            "mainWebsite"
+                        ).style.display = "block";
+
+                    }, 700);
+
+                }, 900);
+
+
+            } else {
+
+                accessMessage.className =
+                    "wrong";
+
+
+                const messages = [
+
+                    "❌ NAHHH 😭 TRY AGAIN.",
+
+                    "BRO THAT IS NOT YOUR BIRTHDAY 💀",
+
+                    "💀 HOW DID YOU GET THAT WRONG",
+
+                    "❌ ACCESS DENIED. YOU HAD ONE JOB.",
+
+                    "😭 PLEASE TRY AGAIN.",
+
+                    "WRONGGGGG 💀"
+
+                ];
+
+
+                accessMessage.textContent =
+                    messages[
+                        Math.floor(
+                            Math.random() *
+                            messages.length
+                        )
+                    ];
+
+            }
+
+        };
+
+
+        choicesContainer.appendChild(button);
+
+    });
+
+
+    /* =====================================================
+       RANDOM BUTTON
+       ===================================================== */
+
+    function randomMessage() {
+
+        const messages = [
+
+            "why did you click that 😭",
+
+            "you really pressed it.",
+
+            "congratulations. nothing happened.",
+
+            "wow. incredible achievement.",
+
+            "the website is disappointed in you.",
+
+            "you could have been doing literally anything else.",
+
+            "STOP CLICKING RANDOM THINGS 💀",
+
+            "okay now click another one.",
+
+            "this button has seen things.",
+
+            "i have no idea why this exists."
+
+        ];
+
+
+        document.getElementById(
+            "randomMessage"
+        ).textContent =
+            messages[
+                Math.floor(
+                    Math.random() *
+                    messages.length
+                )
+            ];
+
+    }
+
+
+    /* =====================================================
+       DON'T CLICK
+       ===================================================== */
+
+    function dontClick() {
+
+        const message =
+            document.getElementById(
+                "randomMessage"
+            );
+
+        message.textContent =
+            "I LITERALLY TOLD YOU NOT TO CLICK IT 😭";
+
+        message.style.background =
+            "red";
+
+        message.style.color =
+            "white";
+
+    }
+
+
+    /* =====================================================
+       FREE MONEY
+       ===================================================== */
+
+    function money() {
+
+        document.getElementById(
+            "randomMessage"
+        ).textContent =
+            "💸 YOU HAVE RECEIVED ₹0.00 💸";
+
+    }
+
+
+    /* =====================================================
+       MAKE IT WORSE
+       ===================================================== */
+
+    function makeWorse() {
+
+        document.body.style.transform =
+            "rotate(1deg)";
+
+        document.body.style.filter =
+            "hue-rotate(90deg)";
+
+        document.getElementById(
+            "randomMessage"
+        ).textContent =
+            "YOU ASKED FOR IT 💀";
+
+    }
+
+
+    /* =====================================================
+       PHOTO MODAL
+       ===================================================== */
+
+    function openPhoto(src) {
+
+        const modal =
+            document.getElementById(
+                "photoModal"
+            );
+
+        const image =
+            document.getElementById(
+                "modalImage"
+            );
+
+        image.src = src;
+
+        modal.style.display =
+            "flex";
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    function closePhoto() {
+
+        document.getElementById(
+            "photoModal"
+        ).style.display =
+            "none";
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* Close modal if background is tapped */
+
+    document
+        .getElementById("photoModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    this
+                ) {
+                    closePhoto();
+                }
+
+            }
+        );
+
+
+    /* =====================================================
+       ESC KEY
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+                closePhoto();
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
+```
