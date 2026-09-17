@@ -10,6 +10,7 @@
 
 <title>HEY YOU 😭</title>
 
+
 <style>
 
 /* =====================================================
@@ -745,7 +746,7 @@ footer {
 
 
 /* =====================================================
-   PHOTO MODAL
+   NORMAL PHOTO MODAL
    ===================================================== */
 
 #photoModal {
@@ -806,6 +807,89 @@ footer {
     cursor: pointer;
 
     z-index: 10000;
+}
+
+
+/* =====================================================
+   RANDOM POPUP PHOTO
+   ===================================================== */
+
+#randomPhotoPopup {
+
+    position: fixed;
+
+    z-index: 99998;
+
+    width: 190px;
+
+    max-width: 45vw;
+
+    border: 6px solid black;
+
+    box-shadow:
+        8px 8px 0 red;
+
+    object-fit: cover;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    display: none;
+}
+
+
+.random-photo-show {
+
+    display: block !important;
+
+    animation:
+        randomPhotoAppear 0.25s ease-out,
+        randomPhotoDisappear 1s ease-in 2.5s forwards;
+}
+
+
+@keyframes randomPhotoAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(0.25)
+            rotate(-20deg);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(var(--photo-rotation));
+    }
+}
+
+
+@keyframes randomPhotoDisappear {
+
+    from {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(var(--photo-rotation));
+    }
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(0.65)
+            rotate(var(--photo-rotation));
+    }
 }
 
 
@@ -1314,7 +1398,7 @@ footer {
 
 
 <!-- =====================================================
-     PHOTO MODAL
+     NORMAL PHOTO MODAL
      ===================================================== -->
 
 <div id="photoModal">
@@ -1338,6 +1422,17 @@ footer {
 
 
 </div>
+
+
+<!-- =====================================================
+     RANDOM POPUP PHOTO
+     ===================================================== -->
+
+<img
+    id="randomPhotoPopup"
+    src=""
+    alt="Random photo"
+>
 
 
 <script>
@@ -1411,6 +1506,11 @@ function checkBirthday() {
                     "mainWebsite"
                 ).style.display =
                     "block";
+
+
+                /* START RANDOM PHOTO SYSTEM */
+
+                startRandomPhotoPopups();
 
 
             }, 700);
@@ -1597,7 +1697,7 @@ function makeWorse() {
 
 
 /* =====================================================
-   PHOTO MODAL
+   NORMAL PHOTO MODAL
    ===================================================== */
 
 function openPhoto(src) {
@@ -1629,7 +1729,7 @@ function openPhoto(src) {
 
 
 /* =====================================================
-   CLOSE PHOTO
+   CLOSE PHOTO MODAL
    ===================================================== */
 
 function closePhoto() {
@@ -1648,7 +1748,7 @@ function closePhoto() {
 
 
 /* =====================================================
-   CLOSE MODAL WHEN BACKGROUND IS CLICKED
+   CLOSE MODAL BY CLICKING BACKGROUND
    ===================================================== */
 
 document
@@ -1691,6 +1791,251 @@ document.addEventListener(
 
     }
 );
+
+
+/* =====================================================
+   RANDOM POPUP PHOTOS
+   ===================================================== */
+
+
+/*
+   Exact filenames from your GitHub repository.
+*/
+
+const randomPhotos = [
+
+    "WhatsApp Image 2026-09-17 at 22.18.15 (1).jpeg",
+
+    "WhatsApp Image 2026-09-17 at 22.18.15 (2).jpeg",
+
+    "WhatsApp Image 2026-09-17 at 22.18.15.jpeg",
+
+    "WhatsApp Image 2026-09-17 at 22.18.17.jpeg",
+
+    "WhatsApp Image 2026-09-17 at 22.18.20.jpeg",
+
+    "WhatsApp Image 2026-09-17 at 22.18.21.jpeg"
+
+];
+
+
+const randomPhotoPopup =
+    document.getElementById(
+        "randomPhotoPopup"
+    );
+
+
+/*
+   We'll shuffle the photos so every photo
+   appears once before the sequence repeats.
+*/
+
+let shuffledPhotos = [];
+
+
+function shufflePhotos() {
+
+    shuffledPhotos =
+        [...randomPhotos];
+
+    for (
+        let i = shuffledPhotos.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        [
+            shuffledPhotos[i],
+            shuffledPhotos[j]
+        ] =
+        [
+            shuffledPhotos[j],
+            shuffledPhotos[i]
+        ];
+
+    }
+
+}
+
+
+function showRandomPhoto() {
+
+
+    /*
+       Refill the shuffled list when empty.
+    */
+
+    if (
+        shuffledPhotos.length === 0
+    ) {
+
+        shufflePhotos();
+
+    }
+
+
+    /*
+       Pick the next random photo.
+    */
+
+    const photo =
+        shuffledPhotos.pop();
+
+
+    randomPhotoPopup.src =
+        photo;
+
+
+    /*
+       Calculate random dimensions.
+    */
+
+    const popupWidth =
+        Math.min(
+            190,
+            window.innerWidth * 0.45
+        );
+
+
+    randomPhotoPopup.style.width =
+        popupWidth + "px";
+
+
+    /*
+       Random position.
+    */
+
+    const maxX =
+        Math.max(
+            10,
+            window.innerWidth -
+            popupWidth -
+            10
+        );
+
+
+    const maxY =
+        Math.max(
+            10,
+            window.innerHeight -
+            230
+        );
+
+
+    const randomX =
+        10 +
+        Math.random() * maxX;
+
+
+    const randomY =
+        10 +
+        Math.random() * maxY;
+
+
+    /*
+       Random rotation.
+    */
+
+    const rotation =
+        -12 +
+        Math.random() * 24;
+
+
+    randomPhotoPopup.style.left =
+        randomX + "px";
+
+
+    randomPhotoPopup.style.top =
+        randomY + "px";
+
+
+    randomPhotoPopup.style.setProperty(
+        "--photo-rotation",
+        rotation + "deg"
+    );
+
+
+    /*
+       Reset animation.
+    */
+
+    randomPhotoPopup.classList.remove(
+        "random-photo-show"
+    );
+
+
+    void randomPhotoPopup.offsetWidth;
+
+
+    /*
+       Show photo.
+    */
+
+    randomPhotoPopup.classList.add(
+        "random-photo-show"
+    );
+
+
+    /*
+       Remove animation class after it finishes.
+    */
+
+    setTimeout(function() {
+
+        randomPhotoPopup.classList.remove(
+            "random-photo-show"
+        );
+
+    }, 3700);
+
+}
+
+
+/* =====================================================
+   START RANDOM PHOTO SYSTEM
+   ===================================================== */
+
+function startRandomPhotoPopups() {
+
+
+    /*
+       Create the first random order.
+    */
+
+    shufflePhotos();
+
+
+    /*
+       First random photo appears 20 seconds
+       after entering the website.
+    */
+
+    setTimeout(function() {
+
+
+        showRandomPhoto();
+
+
+        /*
+           After the first one,
+           another appears every 20 seconds.
+        */
+
+        setInterval(
+            showRandomPhoto,
+            20000
+        );
+
+
+    }, 20000);
+
+}
 
 </script>
 
